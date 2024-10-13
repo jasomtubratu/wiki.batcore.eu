@@ -30,7 +30,7 @@ export default function RootLayout({ children }: any) {
       <body className={inter.className}>
         <AuthProvider>
           <Providers>
-            <Suspense fallback={<div>Loading....</div>}>{children}</Suspense>
+            {children}
           </Providers>
         </AuthProvider>
       </body>

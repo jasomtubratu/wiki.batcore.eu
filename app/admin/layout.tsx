@@ -15,7 +15,7 @@ export interface ProvidersProps {
     themeProps?: ThemeProviderProps;
 }
 
-export default async function RootLayout({ children, themeProps }: ProvidersProps) {
+export default function RootLayout({ children, themeProps }: ProvidersProps) {
     const { status } = useSession();
     const router = useRouter();
 
