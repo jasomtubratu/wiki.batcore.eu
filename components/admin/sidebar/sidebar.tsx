@@ -1,15 +1,17 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { HomeIcon } from "../icons/sidebar/home-icon";
-import { AccountsIcon } from "../icons/sidebar/accounts-icon";
-import { SidebarItem } from "./sidebar-item";
-import { SidebarMenu } from "./sidebar-menu";
-import { useSidebarContext } from "../layout/layout-context";
 import { usePathname } from "next/navigation";
 import { Image } from "@nextui-org/react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { IconArticle, IconArticleFilled, IconShieldCheckered } from "@tabler/icons-react";
+
+import { useSidebarContext } from "../layout/layout-context";
+import { AccountsIcon } from "../icons/sidebar/accounts-icon";
+import { HomeIcon } from "../icons/sidebar/home-icon";
+
+import { SidebarMenu } from "./sidebar-menu";
+import { SidebarItem } from "./sidebar-item";
 import { Sidebar } from "./sidebar.styles";
 
 export const SidebarWrapper = () => {
@@ -18,27 +20,9 @@ export const SidebarWrapper = () => {
   const [administrator, setAdministrator] = useState(false);
 
   useEffect(() => {
-    async function checkIfAdmin() {
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/admin/verify", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${Cookies.get("googlesesionid")}`
-
-          },
-        });
-    
-        if (response.ok) {
-          const jsonresponse = await response.json()
-          setAdministrator(jsonresponse)
-        }
-      } catch (error) {
-        console.error("Error occurred while fetching status data: ", error);
-      }
+    if (Cookies.get("role")?.toLocaleLowerCase() === "admin") {
+      setAdministrator(true);
     }
-
-    checkIfAdmin();
   }, []);
 
   return (
@@ -51,7 +35,7 @@ export const SidebarWrapper = () => {
       >
         <div className={Sidebar.Header()}>
         <div className="flex items-center gap-2">
-          <Image src="/favicon.ico" alt="logo" height={32} width={32}></Image>
+          <Image alt="logo" height={32} src="/favicon.ico" width={32} />
           <div className="flex flex-col gap-4">
             <h3 className="text-xl font-medium m-0 text-default-900 -mb-4 whitespace-nowrap">
               <Link href="/">BatCore.eu</Link>
@@ -65,48 +49,48 @@ export const SidebarWrapper = () => {
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
             <SidebarItem
-              title="Domov"
+              href="/admin"
               icon={<HomeIcon />}
               isActive={pathname === "/admin"}
-              href="/admin"
+              title="Domov"
             />
             <SidebarMenu title="Články">
               <SidebarItem
-                isActive={pathname === "/admin/articles"}
-                title="Tvoje Články"
                 href="/admin/articles"
                 icon={<IconArticle color="gray" />}
+                isActive={pathname === "/admin/articles"}
+                title="Tvoje Články"
               />
             </SidebarMenu>
 
             <SidebarMenu title="Účet">
             <SidebarItem
+                href="/admin/profile"
+                icon={<AccountsIcon />}
                 isActive={pathname === "/admin/profile"}
                 title="Tvôj účet"
-                icon={<AccountsIcon />}
-                href="/admin/profile"
               />
               <SidebarItem
+                href="/admin/profile/security"
+                icon={<IconShieldCheckered color="gray" />}
                 isActive={pathname === "/admin/profile/security"}
                 title="Zabezpečenie účtu"
-                icon={<IconShieldCheckered color="gray" />}
-                href="/admin/profile/security"
               />
             </SidebarMenu>
 
             {administrator && ( 
               <SidebarMenu title="Administration">
                 <SidebarItem
+                  href="/admin/administrator/users"
+                  icon={<AccountsIcon />}
                   isActive={pathname === "/admin/administrator/users"}
                   title="Všetky účty"
-                  icon={<AccountsIcon />}
-                  href="/admin/administrator/users"
                 />
                 <SidebarItem
+                  href="/admin/administrator/articles"
+                  icon={<IconArticleFilled color="gray" />}
                   isActive={pathname === "/admin/administrator/articles"}
                   title="Všetky články"
-                  icon={<IconArticleFilled color="gray" />}
-                  href="/admin/administrator/articles"
                 />
               </SidebarMenu>
             )}

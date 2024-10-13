@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
 
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
@@ -14,13 +15,13 @@ export default function SignupFormDemo() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const router = useRouter();
+    const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
     async function verifyIfLogged() {
         const key = Cookies.get("sessionKey");
 
-        toast("Kontrolujem ťvôj účet")
         const response = await fetch("/api/admin/session", {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + key,
@@ -44,11 +45,9 @@ export default function SignupFormDemo() {
 
     async function handleSubmit(event: any) {
         event.preventDefault();
-        toast.loading("Kontrolujem ťvôj účet");
 
         if (!email || !password) return toast.error("Nemôžeš sa prihlásiť bez emailu a hesla");
-        
-
+        setButtonDisabled(true);
         const response = await fetch("/api/admin/login", {
             method: "POST",
             headers: {
@@ -64,7 +63,8 @@ export default function SignupFormDemo() {
             const data = await response.json();
 
             if (data.key) {
-                Cookies.set("googlesesionid", data.key, { expires: 7 });
+                const realKey = atob(data.key.split("").reverse().join(""));
+                Cookies.set("sessionKey", realKey, { expires: 7 });
                 toast.success("Gratulujeme! Dostal si sa k nám do Administrácie!");
                 router.push("/admin");
             } else {
@@ -74,9 +74,9 @@ export default function SignupFormDemo() {
         } else {
             toast.error("Nemáš dostatočné práva na prístup do tejto sekcie");
         }
+        setButtonDisabled(false);
     }
 
-    // tento kod som napisal 21 53 ked sa ma typek pytal aky som bol sigma ked som sa rozpraval zo zenou
     return (
         <>
         <Navbar />
@@ -93,14 +93,15 @@ export default function SignupFormDemo() {
                     <Input className="mb-4" id="email" label="Emailová adresa" placeholder="info@batcore.eu" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <Input className="mb-4" id="password" label="Heslo" placeholder="••••••••" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
-                    <button
+                    <Button
                         className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                        isDisabled={buttonDisabled}
                         type="submit"
                         onClick={(event) => handleSubmit(event)}
                     >
                         Prihlásiť sa &rarr;
                         <BottomGradient />
-                    </button>
+                    </Button>
                 </form>
             </div>
             <Footer />

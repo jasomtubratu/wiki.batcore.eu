@@ -1,8 +1,9 @@
 "use client"
 import NextLink from "next/link";
 import React from "react";
-import { useSidebarContext } from "../layout/layout-context";
 import clsx from "clsx";
+
+import { useSidebarContext } from "../layout/layout-context";
 
 interface Props {
   title: string;
@@ -19,10 +20,11 @@ export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
       setCollapsed();
     }
   };
+
   return (
     <NextLink
-      href={href}
       className="text-default-900 active:bg-none max-w-full"
+      href={href}
     >
       <div
         className={clsx(

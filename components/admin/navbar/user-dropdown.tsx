@@ -14,14 +14,12 @@ import { IconLogout,  IconSettings, IconShield } from "@tabler/icons-react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useTheme } from "next-themes";
 
 export const UserDropdown = () => {
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("Loading...");
   const [email, setEmail] = useState("info@batcore.eu");
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     downloadUser();
@@ -29,11 +27,11 @@ export const UserDropdown = () => {
 
   async function downloadUser() {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/admin/userInformation", {
+      const response = await fetch("/api/admin/userInformation", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          "Authorization": `Bearer ${Cookies.get("googlesesionid")}`
+          "Authorization": `Bearer ${Cookies.get("sessionKey")}`,
 
         },
       });
@@ -51,9 +49,8 @@ export const UserDropdown = () => {
   }
 
   function LogOut() {
-    console.log("Odhlasujem");
     Cookies.remove("googlesesionid");
-    router.push("/sign-in");
+    router.push("/");
     toast.success("Úspešne si sa odhlásil!");
   }
 
