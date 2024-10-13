@@ -13,24 +13,25 @@ enum Role {
 }
 
 model User {
-    id   String @id @default(cuid()) @map("_id")
-    email String @unique
-    name  String
-    password String
-    avatar String?
-    role Role @default(EDITOR)
-    key String
+    id        String   @id @default(cuid()) @map("_id")
+    email     String   @unique
+    name      String
+    password  String
+    avatar    String?
+    role      Role     @default(EDITOR)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Post {
-    id   String @id @default(cuid()) @map("_id")
-    title String
-    content String
-    author String 
-    category String
-    isPublic Boolean
-    isDeleted Boolean @default(false)
-    emoji String
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    title     String
+    content   String
+    author    String
+    category  String
+    isPublic  Boolean
+    isDeleted Boolean  @default(false)
+    emoji     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

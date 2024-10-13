@@ -4,10 +4,12 @@ import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
 import { Providers } from "./providers";
+import AuthProvider from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "BatCore.eu - Znalostná Databáza",
-  description: "Potrebuješ nejakú pomoc? Tu ti ukážame tie najčastajšie problémy spojené s Batcorom!",
+  description:
+    "Potrebuješ nejakú pomoc? Tu ti ukážame tie najčastajšie problémy spojené s Batcorom!",
   icons: {
     icon: "/favicon.ico",
   },
@@ -22,15 +24,15 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children } :any) {
+export default function RootLayout({ children }: any) {
   return (
     <html lang="sk">
       <body className={inter.className}>
-        <Providers>
-          <Suspense fallback={<div>Loading....</div>}>
-          {children}
-          </Suspense>
+        <AuthProvider>
+          <Providers>
+            <Suspense fallback={<div>Loading....</div>}>{children}</Suspense>
           </Providers>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -2,10 +2,12 @@
 import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
-import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 
+export interface ProvidersProps {
+  children: React.ReactNode;
+}
 import { Layout } from "@/components/admin/layout/layout";
 
 export interface ProvidersProps {
@@ -13,8 +15,15 @@ export interface ProvidersProps {
     themeProps?: ThemeProviderProps;
 }
 
-export default function RootLayout({ children, themeProps }: ProvidersProps) {
+export default async function RootLayout({ children, themeProps }: ProvidersProps) {
+    const { status } = useSession();
     const router = useRouter();
+
+    if (status === "unauthenticated") {
+        router.push("/");
+    
+        return <></>;
+      }
 
     return (
         <NextUIProvider>

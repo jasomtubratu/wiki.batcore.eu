@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
+import { signIn, useSession } from "next-auth/react";
 
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
@@ -16,61 +16,31 @@ export default function SignupFormDemo() {
     const [password, setPassword] = React.useState("");
     const router = useRouter();
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
-
-    async function verifyIfLogged() {
-        const key = Cookies.get("sessionKey");
-
-        const response = await fetch("/api/admin/session", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + key,
-            },
-        })
-
-        if (response.ok) {
-            router.push("/admin");
-            toast.success("Gratulujeme! Dostal si sa k nám do Administrácie!")
-        } else {
-            toast.error("Nemáš dostatočné práva na prístup do tejto sekcie")
-        }
-    }
-
+    const { status } = useSession();
 
     useEffect(() => {
-        if (Cookies.get("sessionKey")) {
-            verifyIfLogged()
+        if (status === "authenticated") {
+          router.push("/admin");
         }
-    }, [])
+      }, [status]);
 
     async function handleSubmit(event: any) {
         event.preventDefault();
 
         if (!email || !password) return toast.error("Nemôžeš sa prihlásiť bez emailu a hesla");
         setButtonDisabled(true);
-        const response = await fetch("/api/admin/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        })
+        const response = await signIn("credentials", {
+            redirect: false,
+            email: email,
+            password: password,
 
-        if (response.ok) {
-            const data = await response.json();
+        });
 
-            if (data.key) {
-                const realKey = atob(data.key.split("").reverse().join(""));
-                Cookies.set("sessionKey", realKey, { expires: 7 });
-                toast.success("Gratulujeme! Dostal si sa k nám do Administrácie!");
-                router.push("/admin");
-            } else {
-                toast.error("Server nám poslal neplatný request :(");
-            }
-            verifyIfLogged()
+        if (!response) {
+            toast.error("Nastala neznáma chyba!");
+        } else if (response.ok) {
+            router.push("/admin");
+            toast.success("Gratulujeme! Dostal si sa k nám do Administrácie!");
         } else {
             toast.error("Nemáš dostatočné práva na prístup do tejto sekcie");
         }
