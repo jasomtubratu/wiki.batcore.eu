@@ -1,0 +1,35 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum Role {
+    EDITOR
+    ADMIN
+}
+
+model User {
+    id   String @id @default(cuid()) @map("_id")
+    email String @unique
+    name  String
+    password String
+    avatar String?
+    role Role @default(EDITOR)
+}
+
+model Post {
+    id   String @id @default(cuid()) @map("_id")
+    title String
+    content String
+    author String 
+    category String
+    isPublic Boolean
+    isDeleted Boolean @default(false)
+    emoji String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
