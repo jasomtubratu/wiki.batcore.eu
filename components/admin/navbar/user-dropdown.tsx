@@ -12,14 +12,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { IconLogout,  IconSettings, IconShield } from "@tabler/icons-react";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+
+import { useRouterWithLoader } from "@/components/useRouterNprogress";
 
 export const UserDropdown = () => {
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("Loading...");
   const [email, setEmail] = useState("info@batcore.eu");
-  const router = useRouter();
+  const router = useRouterWithLoader();
 
   useEffect(() => {
     downloadUser();
@@ -50,7 +51,7 @@ export const UserDropdown = () => {
 
   function LogOut() {
     Cookies.remove("googlesesionid");
-    router.push("/");
+    router.push("/", undefined);
     toast.success("Úspešne si sa odhlásil!");
   }
 

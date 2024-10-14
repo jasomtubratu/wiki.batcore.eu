@@ -2,13 +2,13 @@
 import { Card, CardBody, CardFooter, CardHeader, Spinner } from "@nextui-org/react";
 import { Emoji } from "emoji-picker-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { title, subtitle } from "@/components/primitives";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/main/footer";
+import { useRouterWithLoader } from "@/components/useRouterNprogress";
 
 interface Article {
   _id: string;
@@ -23,7 +23,7 @@ export default function Home() {
     others: [],
   });
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const router = useRouterWithLoader();
 
   useEffect(() => {
     downloadTopArticles();
@@ -69,7 +69,7 @@ export default function Home() {
         ))}
       </CardBody>
       <CardFooter>
-        <Link href={`/category/${path}`} onClick={() => router.push(`/category/${path}`)}>
+        <Link href={`/category/${path}`} onClick={() => router.push(`/category/${path}`, undefined)}>
           <p className="text-blue-500 text-sm">Prečítať viac</p>
         </Link>
       </CardFooter>

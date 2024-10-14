@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
@@ -9,18 +8,19 @@ import { signIn, useSession } from "next-auth/react";
 
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
+import { useRouterWithLoader } from "@/components/useRouterNprogress";
 
 
 export default function SignupFormDemo() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const router = useRouter();
+    const router = useRouterWithLoader();
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
     const { status } = useSession();
 
     useEffect(() => {
         if (status === "authenticated") {
-          router.push("/admin");
+          router.push("/admin", undefined);
         }
       }, [status]);
 
@@ -39,7 +39,7 @@ export default function SignupFormDemo() {
         if (!response) {
             toast.error("Nastala neznáma chyba!");
         } else if (response.ok) {
-            router.push("/admin");
+            router.push("/admin", undefined);
             toast.success("Gratulujeme! Dostal si sa k nám do Administrácie!");
         } else {
             toast.error("Nemáš dostatočné práva na prístup do tejto sekcie");

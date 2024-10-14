@@ -9,6 +9,7 @@ export interface ProvidersProps {
   children: React.ReactNode;
 }
 import { Layout } from "@/components/admin/layout/layout";
+import { useRouterWithLoader } from "@/components/useRouterNprogress";
 
 export interface ProvidersProps {
     children: React.ReactNode;
@@ -17,10 +18,10 @@ export interface ProvidersProps {
 
 export default function RootLayout({ children, themeProps }: ProvidersProps) {
     const { status } = useSession();
-    const router = useRouter();
+    const router = useRouterWithLoader();
 
     if (status === "unauthenticated") {
-        router.push("/");
+        router.push("/", undefined);
     
         return <></>;
       }
