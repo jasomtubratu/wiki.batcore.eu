@@ -23,7 +23,7 @@ model User {
     updatedAt DateTime @updatedAt
 }
 
-model Post {
+model Article {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     title     String
     content   String

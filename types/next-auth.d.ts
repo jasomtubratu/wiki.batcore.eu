@@ -7,3 +7,9 @@ export type User = {
     image: string;
     role: Role;
 };
+
+declare module "next-auth" {
+    interface Session extends DefaultSession {
+      user: User & DefaultSession["user"];
+    }
+  }

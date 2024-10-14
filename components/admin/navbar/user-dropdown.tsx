@@ -12,7 +12,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { IconLogout,  IconSettings, IconShield } from "@tabler/icons-react";
 import Cookies from "js-cookie";
-import { toast } from "react-toastify";
 
 import { useRouterWithLoader } from "@/components/useRouterNprogress";
 

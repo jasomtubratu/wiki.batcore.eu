@@ -3,7 +3,6 @@ import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export interface ProvidersProps {
   children: React.ReactNode;

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Image } from "@nextui-org/react";
 import Link from "next/link";
-import Cookies from "js-cookie";
-import { IconArticle, IconArticleFilled, IconShieldCheckered } from "@tabler/icons-react";
+import { IconArticle, IconArticleFilled } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 
 import { useSidebarContext } from "../layout/layout-context";
 import { AccountsIcon } from "../icons/sidebar/accounts-icon";
@@ -18,12 +18,13 @@ export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
   const [administrator, setAdministrator] = useState(false);
+  const session = useSession();
 
   useEffect(() => {
-    if (Cookies.get("role")?.toLocaleLowerCase() === "admin") {
-      setAdministrator(true);
-    }
-  }, []);
+  if (session.data?.user?.role === "ADMIN") {
+    setAdministrator(true);
+  }
+  }, [session]);
 
   return (
     <aside className="h-screen z-[202] sticky top-0">
@@ -69,12 +70,6 @@ export const SidebarWrapper = () => {
                 icon={<AccountsIcon />}
                 isActive={pathname === "/admin/profile"}
                 title="Tvôj účet"
-              />
-              <SidebarItem
-                href="/admin/profile/security"
-                icon={<IconShieldCheckered color="gray" />}
-                isActive={pathname === "/admin/profile/security"}
-                title="Zabezpečenie účtu"
               />
             </SidebarMenu>
 
