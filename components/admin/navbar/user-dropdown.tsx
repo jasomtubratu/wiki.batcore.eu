@@ -49,13 +49,6 @@ export const UserDropdown = () => {
     }
   }
 
-  function LogOut() {
-    Cookies.remove("googlesesionid");
-    router.push("/", undefined);
-    toast.success("Úspešne si sa odhlásil!");
-  }
-
-
   return (
     <Dropdown>
       <NavbarItem>
@@ -87,12 +80,12 @@ export const UserDropdown = () => {
             </Link>
           </DropdownItem>
           <DropdownItem key="security" description="Je tvoja história zabezpečená?" href="/admin/profile/security" startContent={<IconShield />}>
-            <Link color="foreground" onClick={() => router.push("/admin/profile/security")}>
+            <Link color="foreground" onClick={() => router.push("/admin/profile/security", undefined)}>
               Zabezpečenie
             </Link>
           </DropdownItem>
-          <DropdownItem key="logout" description="Odhlásiť sa" startContent={<IconLogout />} onClick={() => LogOut()}>
-            <Link color="danger" onClick={() => LogOut()}>
+          <DropdownItem key="logout" description="Odhlásiť sa" startContent={<IconLogout />} onClick={() => router.push("/logout", undefined)}>
+            <Link color="danger" onClick={() => router.push("/logout", undefined)}>
               Odhlásiť sa
             </Link>
           </DropdownItem>
