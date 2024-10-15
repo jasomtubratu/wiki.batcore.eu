@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Home from "./MainPage";
 
 import prisma from "@/prisma/client";
-import { getServerAuthSession } from "@/auth";
 
 type Article = {
     id: string;
@@ -19,10 +18,6 @@ type CategorizedArticles = {
 };
 
 const ArticlePage = async () => {
-    const session = await getServerAuthSession();
-
-    if (!session) notFound();
-
     const userArticles: Article[] = await prisma.article.findMany({
         where: {
             isPublic: true,

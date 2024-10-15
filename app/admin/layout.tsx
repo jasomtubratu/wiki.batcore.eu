@@ -7,8 +7,9 @@ import { useSession } from "next-auth/react";
 export interface ProvidersProps {
   children: React.ReactNode;
 }
+import { notFound } from "next/navigation";
+
 import { Layout } from "@/components/admin/layout/layout";
-import { useRouterWithLoader } from "@/components/useRouterNprogress";
 
 export interface ProvidersProps {
     children: React.ReactNode;
@@ -17,13 +18,10 @@ export interface ProvidersProps {
 
 export default function RootLayout({ children, themeProps }: ProvidersProps) {
     const { status } = useSession();
-    const router = useRouterWithLoader();
 
     if (status === "unauthenticated") {
-        router.push("/", undefined);
-    
-        return <></>;
-      }
+        notFound();
+    } 
 
     return (
         <NextUIProvider>
@@ -37,5 +35,5 @@ export default function RootLayout({ children, themeProps }: ProvidersProps) {
 
             </NextThemesProvider>
         </NextUIProvider>
-    );
+    )
 }
