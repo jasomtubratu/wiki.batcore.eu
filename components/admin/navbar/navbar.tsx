@@ -1,6 +1,7 @@
 "use client"
-import { Input, Navbar, NavbarContent } from "@nextui-org/react";
+import { Navbar, NavbarContent } from "@nextui-org/react";
 import React from "react";
+
 import { BurguerButton } from "./burguer-button";
 import { UserDropdown } from "./user-dropdown";
 
@@ -22,10 +23,10 @@ export const NavbarWrapper = ({ children }: Props) => {
           <BurguerButton />
         </NavbarContent>
         
-        <div className="w-full max-md:hidden"></div>
+        <div className="w-full max-md:hidden" />
         <NavbarContent
-          justify="end"
           className="w-fit data-[justify=end]:flex-grow-0"
+          justify="end"
         >
           <NavbarContent>
             <UserDropdown />
