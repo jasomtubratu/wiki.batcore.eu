@@ -51,6 +51,7 @@ export default async function Article({
         },
     });
 
+    if (!author) notFound();
 
     // format
     const article: Article = {
