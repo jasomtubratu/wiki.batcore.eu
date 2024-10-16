@@ -9,9 +9,7 @@ const profilePage = async () => {
     const session = await getServerAuthSession();
 
     if (!session) notFound();
-
-    console.log(session.user.id)
-
+    
     const userData = await prisma.user.findFirst({
         where: {
             email: session.user.email,

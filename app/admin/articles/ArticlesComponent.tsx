@@ -87,20 +87,18 @@ export default function ArticleComponent({
   );
 
   const deleteArticle = useCallback(async () => {
-    toast.loading("Mažem článok...");
+    toast("Mažem článok...");
     onOpenChange();
     try {
-      const response = await fetch("/api/admin/article", {
+      const response = await fetch("/api/admin/article/" + articleId, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: articleId }),
       });
 
       if (response.ok) {
         toast.success("Článok bol úspešne zmazaný");
-        window.location.reload();
       } else {
         toast.error("Nepodarilo sa zmazať článok");
       }

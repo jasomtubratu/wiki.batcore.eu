@@ -13,6 +13,7 @@ const ArticlePage = async () => {
     const userArticles = await prisma.article.findMany({
         where: {
             author: session.user.id,
+            isDeleted: false,
         },
         select: {
             id: true,
