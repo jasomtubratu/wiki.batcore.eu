@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 
+import AllUsersMiddle from "./AllUsers";
+
 import prisma from "@/prisma/client";
 import { getServerAuthSession } from "@/auth";
-import AllUsersMiddle from "./AllUsers";
 
 const usersPage = async () => {
     const session = await getServerAuthSession();
