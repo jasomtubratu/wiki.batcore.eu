@@ -8,6 +8,7 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 import { useRouter } from "next/navigation";
 
 import ToastComponent from "@/components/ToastComponent";
+import TopLoader from "@/components/TopLoader";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -20,7 +21,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   return (
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider {...themeProps} attribute="class" defaultTheme="dark">{children}</NextThemesProvider>
-
+      <TopLoader />
       <ToastComponent />
     </NextUIProvider>
   );
