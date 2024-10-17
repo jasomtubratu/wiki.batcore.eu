@@ -1,5 +1,3 @@
-import { notFound } from "next/navigation";
-
 import Home from "./MainPage";
 
 import prisma from "@/prisma/client";

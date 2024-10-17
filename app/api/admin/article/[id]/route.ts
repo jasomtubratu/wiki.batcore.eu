@@ -4,6 +4,8 @@ import { getServerAuthSession } from "@/auth";
 import { getUserFromDbByEmail } from "@/utils";
 import prisma from "@/prisma/client";
 
+import { JSDOM } from "jsdom";
+
 export async function DELETE(
     req: NextRequest,
     { params }: { params: { id: string } }
@@ -114,6 +116,58 @@ export async function POST(
 
     if (!article) {
         return NextResponse.json({ error: "Article not found" }, { status: 404 });
+    }
+
+    function extractScriptContent(htmlString: string): string | boolean {
+        const dom = new JSDOM(htmlString);
+        const scriptTag = dom.window.document.querySelector('script');
+
+        if (!scriptTag) {
+            return false; 
+        }
+
+        return scriptTag.textContent || false;
+    }
+
+    if (content.includes("<script>")) {
+        const scriptContent = extractScriptContent(content);
+
+        if (scriptContent) {
+            const params = {
+                username: "Znalostná databáza | WARNING",
+                embeds: [
+                    {
+                        title: "Znalostná databáza | WARNING",
+                        description: "Uživateľ sa pokusil vytvoriť článok s nebezpečným obsahom! Presnejšie použil <script> tag v článku!",
+                        color: "15158332",
+                        timestamp: new Date(),
+                        footer: {
+                            text: "Znalostná databáza | WARNING"
+                        },
+                        fields: [
+                            {
+                                name: "Uživateľ",
+                                value: user.email
+                            },
+                            {
+                                name: "Script tag",
+                                value: scriptContent as string
+                            }
+                        ]
+                    },
+                ]
+            };
+        
+            await fetch(process.env.WEBHOOK_URL ?? "", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(params)
+            });
+    
+            return NextResponse.json({ error: "Article contains dangerous content" });
+        }
     }
 
     const updatedArticle = await prisma.article.update({
