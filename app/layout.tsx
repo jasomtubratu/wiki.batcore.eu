@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from "react";
 
 import { Providers } from "./providers";
 import AuthProvider from "./AuthProvider";
