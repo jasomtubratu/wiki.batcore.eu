@@ -8,12 +8,17 @@ import {
   ModalBody,
   Divider,
   ModalFooter,
-  Card,
-  CardHeader,
-  CardBody,
   useDisclosure,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Switch,
+  Input,
 } from "@nextui-org/react";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconTrash, IconSearch } from "@tabler/icons-react";
 import { Emoji } from "emoji-picker-react";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -77,6 +82,7 @@ export default function ArticleComponent({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [articleId, setArticleId] = useState<string | null>(null);
   const router = useRouterWithLoader();
+  const [search, setSearch] = useState("");
 
   const deleteModal = useCallback(
     (id: string) => {
@@ -107,11 +113,13 @@ export default function ArticleComponent({
     }
   }, [articleId, onOpenChange]);
 
+
+
   return (
     <>
       <div className="flex items-center justify-between my-5">
         <h1 className="text-center text-2xl font-bold flex-grow text-center">
-          Články
+          Tvoje Články
         </h1>
         <Button
           color="secondary"
@@ -121,47 +129,69 @@ export default function ArticleComponent({
           Vytvoriť článok
         </Button>
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 m-5 gap-4">
-        {articles.map((article) => (
-          <Card key={article.id} className="m-1">
-            <CardHeader className="flex justify-between">
-              <Link
-                className="flex"
-                href={`/article/${article.id}/?batcore=true`}
-              >
-                <Emoji size={20} unified={article.emoji} />
-                {article.title}
-              </Link>
-              <div className="flex">
-                <IconEdit
-                  color="gray"
-                  onClick={() =>
-                    router.push(
-                      `/admin/articles/create?id=${article.id}`,
-                      undefined
-                    )
-                  }
-                />
-                <IconTrash
-                  color="red"
-                  onClick={() => deleteModal(article.id)}
-                />
-              </div>
-            </CardHeader>
-            <Divider />
-            <CardBody>
-              <p className="text-sm text-gray-500">
-                Kategória: {article.category.toUpperCase()}
-              </p>
-              <p className="text-sm text-gray-500">
-                Verejné: {article.isPublic ? "Áno" : "Nie"}
-              </p>
-              <p className="text-sm text-gray-500">ID: {article.id}</p>
-            </CardBody>
-          </Card>
-        ))}
+      
+      <div className="flex justify-center w-full my-5">
+        <Input
+          classNames={{
+            base: "max-w-full sm:max-w-[20rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder="Píš pre vyhľadávanie...."
+          size="sm"
+          startContent={<IconSearch size={18} />}
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
+
+      <Divider />
+
+      <Table removeWrapper aria-label="all articles" className="m-5">
+        <TableHeader>
+          <TableColumn>Názov</TableColumn>
+          <TableColumn>Kategória</TableColumn>
+          <TableColumn>Verejné</TableColumn>
+          <TableColumn>Akcie</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {articles
+          .filter((article) =>
+            search ? article.title.toLowerCase().includes(search.toLowerCase()) : true
+          )
+          .map((article) => (
+            <TableRow key={article.id}>
+              <TableCell>
+                <Link className="flex align-items" href={`/article/${article.id}/?admin=true`}>
+                  <Emoji size={20} unified={article.emoji} /> {article.title}
+                </Link>
+                </TableCell>
+              <TableCell>{article.category.toUpperCase()}</TableCell>
+              <TableCell>
+                <Switch
+                  isDisabled
+                  isSelected={article.isPublic}
+                />
+              </TableCell>
+              <TableCell>
+                <div className="flex">
+                  <IconEdit
+                    color="gray"
+                    onClick={() =>
+                      router.push(`/admin/articles/create?id=${article.id}`, undefined)
+                    }
+                  />
+                  <IconTrash color="red" onClick={() => deleteModal(article.id)} />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+
+      </Table>
 
       <DeleteConfirmationModal
         articleId={articleId}
