@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
+import nProgress from "nprogress";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
@@ -30,6 +31,7 @@ export default function CreateOrEditArticle() {
     }, [id]);
 
     const fetchArticle = async () => {
+        nProgress.start();
         try {
             const response = await fetch("/api/admin/article/" + id, {
                 method: "GET",
@@ -47,7 +49,10 @@ export default function CreateOrEditArticle() {
         } catch (error) {
             toast.error("Nastala chyba");
             router.push("/admin/articles");
+        } finally {
+            nProgress.done();
         }
+
     };
 
     const handleArticleSubmission = async () => {
@@ -146,7 +151,9 @@ export default function CreateOrEditArticle() {
                 </Checkbox>
             </CardBody>
             <CardFooter>
-                <Button fullWidth color="primary" variant="shadow" onClick={handleArticleSubmission}>
+                <Button fullWidth color="primary" isDisabled={
+                    !articleData.title || !articleData.category || !articleData.emoji || !articleData.content
+                } variant="shadow" onClick={handleArticleSubmission}>
                     {id ? "Upraviť článok" : "Vytvoriť článok"}
                 </Button>
             </CardFooter>
