@@ -45,7 +45,7 @@ export default function ArticleComponent({
                         </Card>
                     </section>
 
-                    <Footer />
+                    <Footer isArticle={true} />
                 </>
             ) : (
                 <div className="flex items-center justify-center h-screen">
