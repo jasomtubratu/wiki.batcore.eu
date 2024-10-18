@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { JSDOM } from "jsdom";
 
 import { getServerAuthSession } from "@/auth";
 import { getUserFromDbByEmail } from "@/utils";
 import prisma from "@/prisma/client";
 
-import { JSDOM } from "jsdom";
 
 export async function DELETE(
     req: NextRequest,
@@ -68,12 +68,12 @@ export async function GET(
     const article = await prisma.article.findUnique({
         where: {
             id: params.id,
-            author: user.id,
         },
         select: {
             title: true,
             category: true,
             content: true,
+            author: true,
             isPublic: true,
             emoji: true,
         },
@@ -81,6 +81,10 @@ export async function GET(
 
     if (!article) {
         return NextResponse.json({ error: "Article not found" }, { status: 404 });
+    }
+
+    if (user.role !== 'ADMIN' && article.author !== user.id) {
+        return NextResponse.json({ error: "You are not the author of this article" }, { status: 403 });
     }
 
     return NextResponse.json({ article });
@@ -110,12 +114,15 @@ export async function POST(
     const article = await prisma.article.findUnique({
         where: {
             id: params.id,
-            author: user.id,
         },
     });
 
     if (!article) {
         return NextResponse.json({ error: "Article not found" }, { status: 404 });
+    }
+
+    if (user.role !== 'ADMIN' && article.author !== user.id) {
+        return NextResponse.json({ error: "You are not the author of this article" }, { status: 403 });
     }
 
     function extractScriptContent(htmlString: string): string | boolean {
