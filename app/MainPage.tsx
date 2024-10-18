@@ -30,7 +30,7 @@ export default function Home({
   const renderArticles = (category: keyof CategorizedArticles, label: string, path: string) => (
     <Card
       isBlurred
-      className="truncate border-gray-500/100 border-2 bg-background/60 dark:bg-default-100/50 hover:border-indigo-500/100 transform transition duration-500 hover:scale-110 max-w-64"
+      className="border-gray-500/100 border-2 bg-background/60 dark:bg-default-100/50 hover:border-indigo-500/100 transform transition duration-500 hover:scale-110 max-w-64"
     >
       <CardHeader>
         <h1 className="font-bold text-xl">{label}</h1>
@@ -38,7 +38,7 @@ export default function Home({
       <CardBody>
         {articles[category].map((article: Article) => (
           <Link key={article.id} href={`/article/${article.id}`}>
-            <p className="flex my-1 truncate">
+            <p className="flex my-1">
               <Emoji size={25} unified={article.emoji} />
               {"⠀"}
               {article.title}
