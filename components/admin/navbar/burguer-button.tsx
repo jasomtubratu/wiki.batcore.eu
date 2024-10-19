@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 "use client"
 import React from "react";
+
 import { useSidebarContext } from "../layout/layout-context";
+
 import { StyledBurgerButton } from "./navbar.styles";
 
 export const BurguerButton = () => {

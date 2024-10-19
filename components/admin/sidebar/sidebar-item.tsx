@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 "use client"
 import NextLink from "next/link";
 import React from "react";
@@ -13,7 +15,7 @@ interface Props {
 }
 
 export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
-  const { collapsed, setCollapsed } = useSidebarContext();
+  const { setCollapsed } = useSidebarContext();
 
   const handleClick = () => {
     if (window.innerWidth < 768) {

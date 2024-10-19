@@ -1,21 +1,21 @@
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
 } from "@nextui-org/navbar";
-import { ThemeSwitch } from "@/components/theme-switch";
 import NextLink from "next/link";
 import Image from "next/image";
 
+import { ThemeSwitch } from "@/components/theme-switch";
+
 export const Navbar = () => {
   return (
-    <NextUINavbar maxWidth="xl" position="sticky" isBlurred>
+    <NextUINavbar isBlurred maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Image src={"/favicon.ico"} alt="Logo" width={24} height={24} />
+            <Image alt="Logo" height={24} src={"/favicon.ico"} width={24} />
             <p className="font-bold text-inherit">wiki.BatCore.eu</p>
           </NextLink>
         </NavbarBrand>

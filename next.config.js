@@ -2,20 +2,6 @@
 const nextConfig = {
     reactStrictMode: false,
     poweredByHeader: false,
-    webpack: (config, { isServer }) => {
-      if (!isServer) {
-        config.resolve = {
-          ...config.resolve,
-          fallback: {
-            net: false,
-            dns: false,
-            tls: false,
-            fs: false,
-            request: false,
-          },
-        };
-      }
-      },
     async headers() {
       return [
         {
