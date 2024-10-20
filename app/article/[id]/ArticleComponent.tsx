@@ -34,9 +34,7 @@ export default function ArticleComponent({ article }: { article: Article }) {
   };
 
   return (
-    <>
-      {article.title ? (
-        <>
+    <div className="flex flex-col min-h-screen">
           <Navbar />
 
           <article className="container mx-auto px-4 py-8 max-w-4xl">
@@ -47,8 +45,8 @@ export default function ArticleComponent({ article }: { article: Article }) {
             <div className="flex items-center space-x-4 mb-8">
               <User
                 avatarProps={{ src: article.author.avatar }}
-                name={article.author.name}
                 description={`Posledná úprava: ${article.updatedAt.toLocaleDateString()} ${article.updatedAt.toLocaleTimeString()}`}
+                name={article.author.name}
               />
             </div>
 
@@ -57,13 +55,9 @@ export default function ArticleComponent({ article }: { article: Article }) {
             </div>
           </article>
 
-          <Footer />
-        </>
-      ) : (
-        <div className="flex items-center justify-center h-screen">
-          <Spinner color="primary" size="lg" />
-        </div>
-      )}
-    </>
+          <div className="mt-auto">
+        <Footer />
+      </div>
+    </div>
   );
 }
