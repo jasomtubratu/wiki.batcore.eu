@@ -1,5 +1,6 @@
 "use client";
 import { Card, CardBody, CardFooter, Divider, Spinner, User } from "@nextui-org/react";
+import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 
 import { title } from "@/components/primitives";
 import Footer from "@/components/main/footer";
@@ -21,29 +22,39 @@ export default function ArticleComponent({
 }: {
   article: Article;
 }) {
+
+    const Breadcrumb = () => {
+        return (
+            <Breadcrumbs>
+                <BreadcrumbItem href="/">Domov</BreadcrumbItem>
+                <BreadcrumbItem href={"/category/" + article.category}>{article.category.charAt(0).toUpperCase() + article.category.slice(1)}</BreadcrumbItem>
+                <BreadcrumbItem isDisabled>{article.title}</BreadcrumbItem>
+            </Breadcrumbs>
+        );
+    }
+
     return (
         <>
             {article.title ? (
                 <>
                     <Navbar />
 
-                    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-                        <div className="inline-block max-w-lg text-center justify-center">
+                    <article className="container mx-auto px-4 py-8 max-w-4xl">
+                    <Breadcrumb />
 
-                            <h1 className={title({ color: "blue" })}>{article.title}</h1>
-                        </div>
-                        <Divider />
+      <h1 className="text-4xl font-bold mb-4">
+      {article.title}
+      </h1>
 
-                        <Card className="w-full md:w-1/2">
-                            <CardBody>
-                                <span dangerouslySetInnerHTML={{ __html: article.content }} />
-                            </CardBody>
-                            <Divider />
-                            <CardFooter>
-                                <User avatarProps={{ src: article.author.avatar }} name={article.author.name} />
-                            </CardFooter>
-                        </Card>
-                    </section>
+      <div className="flex items-center space-x-4 mb-8">
+      <User avatarProps={{ src: article.author.avatar }} name={article.author.name} />
+      </div>
+
+      <div className="prose prose-slate max-w-none">
+    <span dangerouslySetInnerHTML={{ __html: article.content }} />
+      </div>
+    </article>
+
 
                     <Footer />
                 </>
