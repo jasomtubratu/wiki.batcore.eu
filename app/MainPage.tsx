@@ -1,6 +1,22 @@
 "use client";
-import { Button, Card, CardBody, CardHeader, Divider, Input } from "@nextui-org/react";
-import { IconArrowRight, IconBook2, IconBrandMinecraft, IconQuestionMark, IconSearch, IconServer } from "@tabler/icons-react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  AutocompleteSection,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+} from "@nextui-org/react";
+import {
+  IconArrowRight,
+  IconBook2,
+  IconBrandMinecraft,
+  IconQuestionMark,
+  IconSearch,
+  IconServer,
+} from "@tabler/icons-react";
 import { Emoji } from "emoji-picker-react";
 
 import { Navbar } from "@/components/navbar";
@@ -22,14 +38,11 @@ type CategorizedArticles = {
   others: Article[];
 };
 
-export default function Home({
-  articles,
-}: {
-  articles: CategorizedArticles;
-}) {
+export default function Home({ articles }: { articles: CategorizedArticles }) {
   const router = useRouterWithLoader();
 
-  const getCount = (category: keyof CategorizedArticles) => articles[category].length;
+  const getCount = (category: keyof CategorizedArticles) =>
+    articles[category].length;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -41,10 +54,43 @@ export default function Home({
               Znalostná Databáza BatCore.eu
             </h1>
             <p className="text-xl mb-8">
-              Vyhľadajte odpoveď na svoju otázku alebo sa dozviete viac o našich službách.
+              Vyhľadajte odpoveď na svoju otázku alebo sa dozviete viac o našich
+              službách.
             </p>
             <div className="max-w-2xl mx-auto flex">
-              <Input className="flex-grow" placeholder="Zadajte text pre vyhľadávanie..." startContent={<IconSearch/> } type="text"/>
+              <Autocomplete
+                className="flex-grow"
+                defaultItems={Object.values(articles).flat()}
+                listboxProps={{
+                  emptyContent: 'Nenašli sa žiadne výsledky pre hľadaný výraz',
+              }}
+                placeholder="Zadajte text pre vyhľadávanie..."
+                startContent={<IconSearch />}
+                type="text"
+                onSelectionChange={(item) =>
+                  router.push("/article/" + item, undefined)
+                }
+              >
+                {Object.entries(articles).map(([category, articles]) => (
+                  <AutocompleteSection
+                    key={category}
+                    title={category.toUpperCase()}
+                  >
+                    {articles.map((article: Article) => (
+                      <AutocompleteItem
+                        key={article.id}
+                        startContent={
+                          <Emoji size={20} unified={article.emoji} />
+                        }
+                        title={article.title}
+                        onClick={() =>
+                          router.push("/article/" + article.id, undefined)
+                        }
+                      />
+                    ))}
+                  </AutocompleteSection>
+                ))}
+              </Autocomplete>
             </div>
           </div>
         </section>
@@ -53,25 +99,43 @@ export default function Home({
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              Kategórie
-            </h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">Kategórie</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { icon: IconServer, title: "VPS servery", count: getCount("vps") },
-                { icon: IconBrandMinecraft, title: "Minecraft servery", count: getCount("minecraft") },
-                { icon: IconQuestionMark, title: "Ostatné", count: getCount("others") },
+                {
+                  icon: IconServer,
+                  title: "VPS servery",
+                  count: getCount("vps"),
+                },
+                {
+                  icon: IconBrandMinecraft,
+                  title: "Minecraft servery",
+                  count: getCount("minecraft"),
+                },
+                {
+                  icon: IconQuestionMark,
+                  title: "Ostatné",
+                  count: getCount("others"),
+                },
               ].map((category, index) => (
                 <Card key={index}>
                   <CardHeader className="flex flex-row items-center space-x-4">
                     <category.icon className="h-8 w-8 text-primary" />
                     <div>
                       {category.title}
-                      <p className="text-sm text-muted-foreground">{category.count} článkov</p>
+                      <p className="text-sm text-muted-foreground">
+                        {category.count} článkov
+                      </p>
                     </div>
                   </CardHeader>
                   <CardBody>
-                    <Button className="p-0" variant="shadow" onClick={() => router.push("/category/" + category.title, undefined)}>
+                    <Button
+                      className="p-0"
+                      variant="shadow"
+                      onClick={() =>
+                        router.push("/category/" + category.title, undefined)
+                      }
+                    >
                       Pozrieť články <IconArrowRight className="h-4 w-4 ml-1" />
                     </Button>
                   </CardBody>
@@ -87,9 +151,13 @@ export default function Home({
               Posledné články
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {Object.values(articles)
+              {Object.values(articles)
                 .flat()
-                .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+                .sort(
+                  (a, b) =>
+                    new Date(b.updatedAt).getTime() -
+                    new Date(a.updatedAt).getTime()
+                )
                 .slice(0, 6)
                 .map((article: Article, index: number) => (
                   <Card key={index}>
@@ -100,12 +168,19 @@ export default function Home({
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">
-                          {article.updatedAt.toLocaleDateString()} {article.updatedAt.toLocaleTimeString()}
+                          {article.updatedAt.toLocaleDateString()}{" "}
+                          {article.updatedAt.toLocaleTimeString()}
                         </p>
                       </div>
                     </CardHeader>
                     <CardBody>
-                      <Button className="p-0" variant="ghost" onClick={() => router.push("/article/" + article.id, undefined)}>
+                      <Button
+                        className="p-0"
+                        variant="ghost"
+                        onClick={() =>
+                          router.push("/article/" + article.id, undefined)
+                        }
+                      >
                         Prečítať článok <IconBook2 className="h-4 w-4 ml-1" />
                       </Button>
                     </CardBody>
