@@ -41,9 +41,9 @@ const ArticlePage = async () => {
     });
 
     const topArticlesByCategory: CategorizedArticles = {
-        vps: categorizedArticles.vps.slice(0, 5),
-        minecraft: categorizedArticles.minecraft.slice(0, 5),
-        others: categorizedArticles.others.slice(0, 5)
+        vps: categorizedArticles.vps.slice(0, 3),
+        minecraft: categorizedArticles.minecraft.slice(0, 3),
+        others: categorizedArticles.others.slice(0, 3)
     };
 
     return <Home articles={topArticlesByCategory} />;
