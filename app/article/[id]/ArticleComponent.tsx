@@ -1,5 +1,6 @@
 "use client";
 import {
+  Divider,
   Spinner,
   User,
 } from "@nextui-org/react";
@@ -49,6 +50,8 @@ export default function ArticleComponent({ article }: { article: Article }) {
                 name={article.author.name}
               />
             </div>
+
+            <Divider className="mb-3"/>
 
             <div className="prose prose-slate max-w-none">
               <span dangerouslySetInnerHTML={{ __html: article.content }} />

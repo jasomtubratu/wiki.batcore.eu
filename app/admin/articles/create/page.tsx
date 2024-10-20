@@ -123,7 +123,7 @@ export default function CreateOrEditArticle() {
                     onChange={handleInputChange}
                 >
                     <SelectItem key="minecraft" value="minecraft">Minecraft</SelectItem>
-                    <SelectItem value="vps" key="vps">VPS</SelectItem>
+                    <SelectItem key="vps" value="vps">VPS</SelectItem>
                     <SelectItem key="ostatne" value="ostatne">Ostatné</SelectItem>
                 </Select>
                 <Input
