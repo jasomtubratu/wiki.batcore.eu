@@ -218,15 +218,23 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.5, delay: 0.8 + index * 0.2 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
                     viewport={{ once: true }}
+                    whileInView={{ opacity: 1, y: 0 }}
                   >
                     <Card>
                       <CardHeader className="flex justify-between items-center">
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-2 items-start">
                           <Emoji size={20} unified={article.emoji} />
-                          <h1 className="text-lg">{article.title}</h1>
+                          <div>
+                            <h1 className="text-lg font-bold">
+                              {article.title}
+                            </h1>
+                            <p className="text-sm text-gray-500">
+                              {article.category.charAt(0).toUpperCase() +
+                                article.category.slice(1)}
+                            </p>
+                          </div>
                         </div>
                         <div>
                           <p className="text-sm text-gray-500">
