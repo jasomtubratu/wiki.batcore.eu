@@ -18,10 +18,13 @@ import {
   IconServer,
 } from "@tabler/icons-react";
 import { Emoji } from "emoji-picker-react";
+import { motion } from "framer-motion";
 
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/main/footer";
 import { useRouterWithLoader } from "@/components/useRouterNprogress";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { ShootingStars } from "@/components/ui/shooting-stars";
 
 type Article = {
   id: string;
@@ -47,23 +50,44 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+      <ShootingStars />
       <main className="flex-grow">
         <section className="py-20">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">
+            <motion.h1
+              className="text-4xl font-bold mb-4"
+              initial={{ y: 5, opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+              }}
+            >
               Znalostná Databáza BatCore.eu
-            </h1>
-            <p className="text-xl mb-8">
-              Vyhľadajte odpoveď na svoju otázku alebo sa dozviete viac o našich
-              službách.
-            </p>
-            <div className="max-w-2xl mx-auto flex">
+            </motion.h1>
+            <TextGenerateEffect
+              className="text-lg mb-8"
+              words={
+                "Vyhľadajte odpoveď na svoju otázku alebo sa dozviete viac o našich službách."
+              }
+            />
+            <motion.div
+              className="max-w-2xl mx-auto flex"
+              initial={{ y: 5, opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+              }}
+            >
               <Autocomplete
                 className="flex-grow"
                 defaultItems={Object.values(articles).flat()}
                 listboxProps={{
-                  emptyContent: 'Nenašli sa žiadne výsledky pre hľadaný výraz',
-              }}
+                  emptyContent: "Nenašli sa žiadne výsledky pre hľadaný výraz",
+                }}
                 placeholder="Zadajte text pre vyhľadávanie..."
                 startContent={<IconSearch />}
                 type="text"
@@ -91,7 +115,7 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                   </AutocompleteSection>
                 ))}
               </Autocomplete>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -99,7 +123,18 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Kategórie</h2>
+            <motion.h2
+              className="text-3xl font-bold mb-8 text-center"
+              initial={{ y: 5, opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+              }}
+            >
+              Kategórie
+            </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
@@ -118,28 +153,39 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                   count: getCount("others"),
                 },
               ].map((category, index) => (
-                <Card key={index}>
-                  <CardHeader className="flex flex-row items-center space-x-4">
-                    <category.icon className="h-8 w-8 text-primary" />
-                    <div>
-                      {category.title}
-                      <p className="text-sm text-muted-foreground">
-                        {category.count} článkov
-                      </p>
-                    </div>
-                  </CardHeader>
-                  <CardBody>
-                    <Button
-                      className="p-0"
-                      variant="shadow"
-                      onClick={() =>
-                        router.push("/category/" + category.title, undefined)
-                      }
-                    >
-                      Pozrieť články <IconArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  </CardBody>
-                </Card>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  transition={{ delay: 0.8 + index * 0.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                  whileInView={{
+                    opacity: 1,
+                  }}
+                >
+                  <Card>
+                    <CardHeader className="flex flex-row items-center space-x-4">
+                      <category.icon className="h-8 w-8 text-primary" />
+                      <div>
+                        {category.title}
+                        <p className="text-sm text-muted-foreground">
+                          {category.count} článkov
+                        </p>
+                      </div>
+                    </CardHeader>
+                    <CardBody>
+                      <Button
+                        className="p-0"
+                        variant="shadow"
+                        onClick={() =>
+                          router.push("/category/" + category.title, undefined)
+                        }
+                      >
+                        Pozrieť články{" "}
+                        <IconArrowRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    </CardBody>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -147,9 +193,18 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
+            <motion.h2
+              className="text-3xl font-bold mb-8 text-center"
+              initial={{ y: 5, opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+              }}
+            >
               Posledné články
-            </h2>
+            </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {Object.values(articles)
                 .flat()
@@ -160,31 +215,39 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                 )
                 .slice(0, 6)
                 .map((article: Article, index: number) => (
-                  <Card key={index}>
-                    <CardHeader className="flex justify-between items-center">
-                      <div className="flex gap-2 items-center">
-                        <Emoji size={20} unified={article.emoji} />
-                        <h1 className="text-lg">{article.title}</h1>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">
-                          {article.updatedAt.toLocaleDateString()}{" "}
-                          {article.updatedAt.toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </CardHeader>
-                    <CardBody>
-                      <Button
-                        className="p-0"
-                        variant="ghost"
-                        onClick={() =>
-                          router.push("/article/" + article.id, undefined)
-                        }
-                      >
-                        Prečítať článok <IconBook2 className="h-4 w-4 ml-1" />
-                      </Button>
-                    </CardBody>
-                  </Card>
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.2 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    <Card>
+                      <CardHeader className="flex justify-between items-center">
+                        <div className="flex gap-2 items-center">
+                          <Emoji size={20} unified={article.emoji} />
+                          <h1 className="text-lg">{article.title}</h1>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">
+                            {article.updatedAt.toLocaleDateString()}{" "}
+                            {article.updatedAt.toLocaleTimeString()}
+                          </p>
+                        </div>
+                      </CardHeader>
+                      <CardBody>
+                        <Button
+                          className="p-0"
+                          variant="ghost"
+                          onClick={() =>
+                            router.push("/article/" + article.id, undefined)
+                          }
+                        >
+                          Prečítať článok <IconBook2 className="h-4 w-4 ml-1" />
+                        </Button>
+                      </CardBody>
+                    </Card>
+                  </motion.div>
                 ))}
             </div>
           </div>
