@@ -14,6 +14,7 @@ interface Article {
         avatar: string;
         name: string;
     }
+    updatedAt: Date;
 }
 
 export default async function Article({
@@ -35,6 +36,7 @@ export default async function Article({
             category: true,
             content: true,
             author: true,
+            updatedAt: true,
         },
     });
 
@@ -60,6 +62,7 @@ export default async function Article({
         category: thatArticle.category,
         emoji: thatArticle.emoji,
         content: thatArticle.content,
+        updatedAt: thatArticle.updatedAt,
         author: {
             name: author.name,
             avatar: author.avatar || "",
