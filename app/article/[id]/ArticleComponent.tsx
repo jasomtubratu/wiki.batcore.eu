@@ -1,7 +1,6 @@
 "use client";
 import {
   Divider,
-  Spinner,
   User,
 } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
