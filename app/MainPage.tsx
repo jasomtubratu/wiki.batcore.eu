@@ -55,10 +55,9 @@ export default function Home({
   );
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 ">
-
+      <section className="flex-grow-0 flex flex-col items-center justify-center gap-4 pt-10 pb-8">
         <div className="inline-block max-w-lg text-center justify-center">
           <h1 className={title()}>Znalostná Databáza&nbsp;</h1>
           <h1 className={title({ color: "blue" })}>BatCore.eu&nbsp;</h1>
@@ -72,7 +71,9 @@ export default function Home({
               {renderArticles("others", "📙 Ostatné", "others")}
         </div>
       </section>
-      <Footer />
-    </>
+      <div className="mt-auto">
+        <Footer />
+      </div>
+    </div>
   );
 }
