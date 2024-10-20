@@ -7,7 +7,7 @@ import prisma from "@/prisma/client";
 interface Article {
     id: string;
     title: string;
-    createdAt: Date;
+    updatedAt: Date;
     emoji: string;
 }
 
@@ -30,7 +30,7 @@ export default async function Article({
             id: true,
             title: true,
             emoji: true,
-            createdAt: true,
+            updatedAt: true,
         },
     });
 
