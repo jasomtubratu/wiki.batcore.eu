@@ -7,46 +7,31 @@ type Article = {
     title: string;
     emoji: string;
     category: string;
-};
-
-type CategorizedArticles = {
-    vps: Article[];
-    minecraft: Article[];
-    others: Article[];
+    updatedAt: Date;
 };
 
 const ArticlePage = async () => {
     const userArticles: Article[] = await prisma.article.findMany({
         where: {
             isPublic: true,
+            isDeleted: false,
         },
         select: {
             id: true,
             title: true,
             emoji: true,
             category: true,
+            updatedAt: true,
         },
     });
 
-    const categorizedArticles: CategorizedArticles = userArticles.reduce((acc: CategorizedArticles, article: Article) => {
-        if (article.category === 'vps' || article.category === 'minecraft' || article.category === 'others') {
-            acc[article.category].push(article);
-        }
-
-        return acc;
-    }, {
-        vps: [],
-        minecraft: [],
-        others: []
-    });
-
-    const topArticlesByCategory: CategorizedArticles = {
-        vps: categorizedArticles.vps.slice(0, 3),
-        minecraft: categorizedArticles.minecraft.slice(0, 3),
-        others: categorizedArticles.others.slice(0, 3)
+    const categorizedArticles = {
+        vps: userArticles.filter(article => article.category === 'vps'),
+        minecraft: userArticles.filter(article => article.category === 'minecraft'),
+        others: userArticles.filter(article => article.category !== 'vps' && article.category !== 'minecraft'),
     };
 
-    return <Home articles={topArticlesByCategory} />;
+    return <Home articles={categorizedArticles} />;
 }
 
 export default ArticlePage;
