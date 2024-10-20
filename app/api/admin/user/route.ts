@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         });
     }
 
-    if (username) {
+    if (username && username !== user.name) {
         const usernameAlreadyExist = await prisma.user.findFirst({
             where: {
                 name: username,
