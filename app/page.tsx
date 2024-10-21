@@ -30,7 +30,7 @@ const ArticlePage = async () => {
     const categorizedArticles = {
         vps: userArticles.filter(article => article.category === 'vps'),
         minecraft: userArticles.filter(article => article.category === 'minecraft'),
-        others: userArticles.filter(article => article.category !== 'vps' && article.category !== 'minecraft'),
+        others: userArticles.filter(article => article.category === 'ostatne'),
     };
 
     return <Home articles={categorizedArticles} />;

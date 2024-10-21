@@ -18,7 +18,7 @@ export default async function Article({
 }) {
 
     if (!params.id) notFound();
-    if (params.id !== "vps" && params.id !== "minecraft" && params.id !== "others") notFound();
+    if (params.id !== "vps" && params.id !== "minecraft" && params.id !== "ostatne") notFound();
     
     const thatArticle = await prisma.article.findMany({
         where: {

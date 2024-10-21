@@ -152,7 +152,7 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                 {
                   icon: IconQuestionMark,
                   title: "Ostatné",
-                  href: "others",
+                  href: "ostatne",
                   count: getCount("others"),
                 },
               ].map((category, index) => (
