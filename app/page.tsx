@@ -2,6 +2,8 @@ import Home from "./MainPage";
 
 import prisma from "@/prisma/client";
 
+export const dynamic = "force-dynamic";
+
 type Article = {
     id: string;
     title: string;
