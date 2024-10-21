@@ -13,6 +13,9 @@ const articlesPage = async () => {
     }
 
     const articleData = await prisma.article.findMany({
+        where: {
+            isDeleted: false,
+        },
         select: {
             id: true,
             title: true,
@@ -20,7 +23,6 @@ const articlesPage = async () => {
             category: true,
             isPublic: true,
             author: true,
-            isDeleted: false,
         },
     });
 
