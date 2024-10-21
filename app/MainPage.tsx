@@ -140,16 +140,19 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                 {
                   icon: IconServer,
                   title: "VPS servery",
+                  href: "vps",
                   count: getCount("vps"),
                 },
                 {
                   icon: IconBrandMinecraft,
                   title: "Minecraft servery",
+                  href: "minecraft",
                   count: getCount("minecraft"),
                 },
                 {
                   icon: IconQuestionMark,
                   title: "Ostatné",
+                  href: "others",
                   count: getCount("others"),
                 },
               ].map((category, index) => (
@@ -177,7 +180,7 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                         className="p-0"
                         variant="shadow"
                         onClick={() =>
-                          router.push("/category/" + category.title, undefined)
+                          router.push("/category/" + category.href, undefined)
                         }
                       >
                         Pozrieť články{" "}
