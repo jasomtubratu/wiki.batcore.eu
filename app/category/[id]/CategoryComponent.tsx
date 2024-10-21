@@ -3,8 +3,8 @@ import { Input, Card, CardHeader, CardFooter } from "@nextui-org/react";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
-
 import { Emoji } from "emoji-picker-react";
+
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/main/footer";
 interface Article {
@@ -46,7 +46,9 @@ export default function CategoryComponent({
           />
         </div>
         <div className="grid gap-4">
-          {filteredArticles.map((article, index) => (
+          {filteredArticles
+          .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+          .map((article, index) => (
             <Card key={index}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <div className="text-sm font-medium">
@@ -64,9 +66,14 @@ export default function CategoryComponent({
               <CardFooter>
                 <p className="text-xs text-muted-foreground">
                   Posledná úprava: {" "}
+                  {new Date(article.updatedAt).toLocaleDateString([], {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  })}{" "}
                   {new Date(article.updatedAt).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
                   })}
                 </p>
               </CardFooter>
