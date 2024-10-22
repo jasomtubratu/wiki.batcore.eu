@@ -33,7 +33,9 @@ export default function CategoryComponent({
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-3xl font-bold mb-6">
-          {category.charAt(0).toUpperCase() + category.slice(1)}
+          {category === "minecraft" && "Minecraft"}
+          {category === "vps" && "VPS"}
+          {category === "ostatne" && "Ostatné"}
         </h1>
         <div className="relative mb-6">
           <Input
