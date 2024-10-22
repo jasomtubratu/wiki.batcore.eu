@@ -1,0 +1,6 @@
+Contact: mailto:tomas@davidik.eu
+Expires: 2024-12-31T23:59:59.000Z
+Acknowledgments: https://batcore.eu/security/hall-of-fame.txt
+Preferred-Languages: en, fr, sk, cs
+Canonical: https://batcore.eu/.well-known/security.txt
+Policy: https://batcore.eu/security/security-policy.txt
