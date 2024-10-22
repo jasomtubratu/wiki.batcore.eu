@@ -185,7 +185,7 @@ export async function POST(
             title,
             category,
             content,
-            isPublic: Boolean(isPublic),
+            isPublic : isPublic === "true",
             emoji,
         },
     });

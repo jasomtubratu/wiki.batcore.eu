@@ -11,9 +11,10 @@ export async function POST(
     const session = await getServerAuthSession();
     const { title, category, content, emoji, isPublic } = await req.json();
 
-    if (!title || !category || !content || !isPublic || !emoji) {
+    if (!title || !category || !content || !emoji || !isPublic) {
         return NextResponse.json({ error: "Please provide all required fields" }, { status: 400 });
     }
+
     if (!session) {
         return NextResponse.json({ error: "You are not logged in" }, { status: 401 });
     }
@@ -84,7 +85,7 @@ export async function POST(
             content,
             author: user.id,
             emoji,
-            isPublic: Boolean(isPublic),
+            isPublic : isPublic === "true",
         },
     });
 
