@@ -3,15 +3,26 @@
 @tailwind utilities;
 
 .tinymce-content ul {
-    list-style-type: disc;
-    margin-left: 20px;
-  }
-  
-  .tinymce-content ol {
-    list-style-type: decimal;
-    margin-left: 20px;
-  }
-  
-  .tinymce-content li {
-    margin-bottom: 5px;
-  }
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.tinymce-content ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.tinymce-content li {
+  margin-bottom: 5px;
+}
+
+.tinymce-content a {
+  color: rgb(6, 113, 253);
+  text-decoration: underline; 
+}
+
+.tinymce-content code {
+  @apply bg-gray-200 dark:bg-gray-900; 
+  padding: 2px 4px;
+  border-radius: 4px;
+}
