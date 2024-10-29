@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
 import nProgress from "nprogress";
+import Tiptap from "@/components/TipTap";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
@@ -137,12 +138,8 @@ export default function CreateOrEditArticle() {
                         <EmojiPicker onEmojiClick={selectEmoji} />
                     </div>
                 )}
-                <JoditEditor
-                    ref={useRef(null)}
-                    config={editorConfig}
-                    value={articleData.content}
-                    onBlur={(newContent) => setArticleData((prevData) => ({ ...prevData, content: newContent }))}
-                />
+                <Tiptap />
+                
                 <Checkbox
                     isSelected={articleData.visibility}
                     onValueChange={(visibility) => setArticleData((prevData) => ({ ...prevData, visibility }))}
