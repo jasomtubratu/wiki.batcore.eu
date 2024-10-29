@@ -2,6 +2,8 @@
 import { Divider, User } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 
+import styles from './ArticleComponent.module.css'; // Import the CSS module
+
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
 
@@ -17,6 +19,7 @@ interface Article {
   };
   updatedAt: Date;
 }
+
 export default function ArticleComponent({ article }: { article: Article }) {
   const Breadcrumb = () => {
     return (
@@ -49,7 +52,7 @@ export default function ArticleComponent({ article }: { article: Article }) {
 
         <Divider className="mb-3" />
 
-        <div className="prose prose-slate max-w-screen">
+        <div className={`prose prose-slate max-w-screen ${styles.prose} z-50`}>
           <span dangerouslySetInnerHTML={{ __html: article.content }} />
         </div>
       </article>

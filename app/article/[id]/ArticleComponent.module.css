@@ -1,0 +1,16 @@
+.prose {
+    padding-left: 10px;
+  }
+  
+  .prose ul {
+    list-style: inside;
+  }
+  
+  .prose ol {
+    list-style: inside;
+    list-style-type: decimal;
+  }
+  
+  .prose td {
+    border: solid 1px;
+  }
