@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ArticleComponent from "./ArticleComponent";
 
 import prisma from "@/prisma/client";
+import { getServerAuthSession } from "@/auth";
 
 interface Article {
     id: string;
@@ -23,11 +24,11 @@ export default async function Article({
     params: { id : string };
 }) {
     console.log(params.id);
+    const session = await getServerAuthSession();
     const thatArticle = await prisma.article.findFirst({
         where: {
             id: params.id,
             isDeleted: false,
-            isPublic: true,
         },
         select: {
             id: true,
@@ -37,8 +38,13 @@ export default async function Article({
             content: true,
             author: true,
             updatedAt: true,
+            isPublic: true,
         },
     });
+
+    if (!thatArticle || (thatArticle.isPublic === false && !session)) {
+        notFound();
+    }
 
     if (!thatArticle) notFound();
 
