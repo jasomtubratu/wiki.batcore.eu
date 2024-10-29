@@ -1,8 +1,8 @@
 "use client";
+import React from "react";
+import DOMPurify from "dompurify";
 import { Divider, User } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-
-import styles from './ArticleComponent.module.css'; // Import the CSS module
 
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
@@ -21,6 +21,8 @@ interface Article {
 }
 
 export default function ArticleComponent({ article }: { article: Article }) {
+  const sanitizedContent = DOMPurify.sanitize(article.content);
+
   const Breadcrumb = () => {
     return (
       <Breadcrumbs>
@@ -52,9 +54,8 @@ export default function ArticleComponent({ article }: { article: Article }) {
 
         <Divider className="mb-3" />
 
-        <div className={`prose prose-slate max-w-screen ${styles.prose} z-50`}>
-          <span dangerouslySetInnerHTML={{ __html: article.content }} />
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} className="tinymce-content z-50" />
+
       </article>
 
       <div className="mt-auto">

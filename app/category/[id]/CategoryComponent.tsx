@@ -30,7 +30,13 @@ export default function CategoryComponent({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+      >
+        <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700" />
+        <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600" />
+      </div>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-3xl font-bold mb-6">
           {category === "minecraft" && "Minecraft"}
@@ -49,38 +55,42 @@ export default function CategoryComponent({
         </div>
         <div className="grid gap-4">
           {filteredArticles
-          .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-          .map((article, index) => (
-            <Card key={index}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <div className="text-sm font-medium">
-                  <Link
-                    className="hover:underline"
-                    href={`/article/${article.id}`}
-                  >
-                    <div className="flex gap-2">
-                    <Emoji size={20} unified={article.emoji} />
-                    {article.title}
-                    </div>
-                  </Link>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <p className="text-xs text-muted-foreground">
-                  Posledná úprava: {" "}
-                  {new Date(article.updatedAt).toLocaleDateString([], {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  })}{" "}
-                  {new Date(article.updatedAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  })}
-                </p>
-              </CardFooter>
-            </Card>
-          ))}
+            .sort(
+              (a, b) =>
+                new Date(b.updatedAt).getTime() -
+                new Date(a.updatedAt).getTime()
+            )
+            .map((article, index) => (
+              <Card key={index}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="text-sm font-medium">
+                    <Link
+                      className="hover:underline"
+                      href={`/article/${article.id}`}
+                    >
+                      <div className="flex gap-2">
+                        <Emoji size={20} unified={article.emoji} />
+                        {article.title}
+                      </div>
+                    </Link>
+                  </div>
+                </CardHeader>
+                <CardFooter>
+                  <p className="text-xs text-muted-foreground">
+                    Posledná úprava:{" "}
+                    {new Date(article.updatedAt).toLocaleDateString([], {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })}{" "}
+                    {new Date(article.updatedAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </CardFooter>
+              </Card>
+            ))}
         </div>
       </div>
 

@@ -112,6 +112,7 @@ export default function CreateOrEditArticle() {
 
   const handleEditorChange = (content: string) => {
     setArticleData((prevData) => ({ ...prevData, content }));
+    console.log(content);
   };
 
   return (
@@ -186,7 +187,7 @@ export default function CreateOrEditArticle() {
           ],
           toolbar:
             "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-          tinycomments_mode: "embedded",
+            tinycomments_mode: "embedded",
           exportpdf_converter_options: {
             format: "Letter",
             margin_top: "1in",
@@ -204,6 +205,7 @@ export default function CreateOrEditArticle() {
           },
         }}
         onEditorChange={handleEditorChange}
+        
         value={articleData.content}
         
       />
