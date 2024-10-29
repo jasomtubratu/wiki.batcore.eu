@@ -1,8 +1,5 @@
 "use client";
-import {
-  Divider,
-  User,
-} from "@nextui-org/react";
+import { Divider, User } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 
 import Footer from "@/components/main/footer";
@@ -35,29 +32,29 @@ export default function ArticleComponent({ article }: { article: Article }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-          <Navbar />
+      <Navbar />
 
-          <article className="container mx-auto px-4 py-8 max-w-4xl">
-            <Breadcrumb />
+      <article className="container mx-auto px-4 py-8 max-w-4xl">
+        <Breadcrumb />
 
-            <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+        <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
 
-            <div className="flex items-center space-x-4 mb-8">
-              <User
-                avatarProps={{ src: article.author.avatar }}
-                description={`Posledná úprava: ${article.updatedAt.toLocaleDateString()} ${article.updatedAt.toLocaleTimeString()}`}
-                name={article.author.name}
-              />
-            </div>
+        <div className="flex items-center space-x-4 mb-8">
+          <User
+            avatarProps={{ src: article.author.avatar }}
+            description={`Posledná úprava: ${article.updatedAt.toLocaleDateString()} ${article.updatedAt.toLocaleTimeString()}`}
+            name={article.author.name}
+          />
+        </div>
 
-            <Divider className="mb-3"/>
+        <Divider className="mb-3" />
 
-            <div className="prose prose-slate max-w-none">
-              <span dangerouslySetInnerHTML={{ __html: article.content }} />
-            </div>
-          </article>
+        <div className="prose prose-slate max-w-screen">
+          <span dangerouslySetInnerHTML={{ __html: article.content }} />
+        </div>
+      </article>
 
-          <div className="mt-auto">
+      <div className="mt-auto">
         <Footer />
       </div>
     </div>
