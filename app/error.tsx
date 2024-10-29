@@ -1,6 +1,8 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { Button } from "@nextui-org/button";
+import { IconAlertTriangle } from "@tabler/icons-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ErrorProps {
@@ -9,7 +11,6 @@ interface ErrorProps {
 }
 
 export default function Error({ error }: ErrorProps) {
-  const { data: session, status } = useSession();
   const [path, setPath] = useState("");
 
   useEffect(() => {
@@ -20,27 +21,46 @@ export default function Error({ error }: ErrorProps) {
     {
       route: path,
       message: error.message,
-      time: new Date().toISOString(),
-      uuid: session?.user.id,
-      lang: "en",
-      isLogged: status,
     },
     null,
     2
   );
 
+  useEffect(() => {
+    console.log(errorInfo);
+  }, [errorInfo]);
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center p-4 shadow-md rounded">
-        <h1 className="text-6xl font-bold text-red-600">500</h1>
-        <p className="text-lg font-medium text-gray-600 mt-4">
-          Something went wrong on our end.
-        </p>
-        <p className="text-sm text-gray-500 mt-2">
-          Please try again later or contact support if the issue persists.
-        </p>
-        <div className="mt-4">
-          <code className="p-2 text-sm">{errorInfo}</code>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <div>
+          <IconAlertTriangle className="mx-auto h-12 w-12 text-yellow-400" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Ups..</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Niečo sa pokazilo pri načítaní stránky.
+          </p>
+        </div>
+        <div className="mt-8 space-y-6">
+          <p className="text-md text-gray-500">
+            Veľmi nás to mrzí. Kontaktujte nás ak sa problém bude opakovať.
+          </p>
+          <div className="flex justify-center">
+            <Button
+              color="primary"
+              variant="flat"
+              onClick={() => window.location.reload()}
+            >
+              Skúsiť znova
+            </Button>
+          </div>
+          <div>
+            <Link
+              className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              href="/"
+            >
+              Vrátiť sa!
+            </Link>
+          </div>
         </div>
       </div>
     </div>
