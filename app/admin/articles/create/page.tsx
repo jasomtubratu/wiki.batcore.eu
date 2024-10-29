@@ -5,12 +5,11 @@ import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-import React, { useState, useRef, useMemo, useEffect } from "react";
-import dynamic from "next/dynamic";
+import React, { useState, useEffect } from "react";
 import nProgress from "nprogress";
+
 import Tiptap from "@/components/TipTap";
 
-const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 export default function CreateOrEditArticle() {
     const searchParams = useSearchParams();
@@ -99,12 +98,6 @@ export default function CreateOrEditArticle() {
         setShowEmojiPicker(false);
     };
 
-    const editorConfig = useMemo(() => ({
-        readonly: false,
-        placeholder: "",
-        theme: "dark",
-        height: 500,
-    }), []);
 
     return (
         <Card className="m-5">
@@ -139,7 +132,7 @@ export default function CreateOrEditArticle() {
                     </div>
                 )}
                 <Tiptap />
-                
+
                 <Checkbox
                     isSelected={articleData.visibility}
                     onValueChange={(visibility) => setArticleData((prevData) => ({ ...prevData, visibility }))}
