@@ -42,7 +42,7 @@ export default function ArticleComponent({ article }: { article: Article }) {
         <div className="flex items-center space-x-4 mb-8">
           <User
             avatarProps={{ src: article.author.avatar }}
-            description={`Posledná úprava: ${article.updatedAt.toLocaleDateString()} ${article.updatedAt.toLocaleTimeString()}`}
+            description={`Posledná úprava: ${article.updatedAt.toLocaleDateString('sk-SK', { day: '2-digit', month: '2-digit', year: 'numeric' })} ${article.updatedAt.toLocaleTimeString()}`}
             name={article.author.name}
           />
         </div>
