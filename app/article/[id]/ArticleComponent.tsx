@@ -39,6 +39,14 @@ export default function ArticleComponent({ article }: { article: Article }) {
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20 -z-10"
+      >
+        <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700" />
+        <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600" />
+      </div>
+
       <article className="container mx-auto px-4 py-8 max-w-4xl">
         <Breadcrumb />
 
@@ -54,8 +62,10 @@ export default function ArticleComponent({ article }: { article: Article }) {
 
         <Divider className="mb-3" />
 
-        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} className="tinymce-content z-50" />
-
+        <div
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+          className="tinymce-content z-50"
+        />
       </article>
 
       <div className="mt-auto">
