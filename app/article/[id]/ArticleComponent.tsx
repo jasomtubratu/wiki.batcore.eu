@@ -3,6 +3,7 @@ import React from "react";
 import DOMPurify from "dompurify";
 import { Divider, User } from "@nextui-org/react";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+import { IconUser } from "@tabler/icons-react";
 
 import Footer from "@/components/main/footer";
 import { Navbar } from "@/components/navbar";
@@ -18,6 +19,7 @@ interface Article {
     name: string;
   };
   updatedAt: Date;
+  count: number;
 }
 
 export default function ArticleComponent({ article }: { article: Article }) {
@@ -52,12 +54,18 @@ export default function ArticleComponent({ article }: { article: Article }) {
 
         <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
 
-        <div className="flex items-center space-x-4 mb-8">
+        <div className="flex justify-between items-center mb-8">
           <User
             avatarProps={{ src: article.author.avatar }}
             description={`Posledná úprava: ${article.updatedAt.toLocaleDateString('sk-SK', { day: '2-digit', month: '2-digit', year: 'numeric' })} ${article.updatedAt.toLocaleTimeString()}`}
             name={article.author.name}
           />
+          <div className="flex items-center space-x-2">
+            <IconUser color="gray" size={18} />
+            <p className="text-gray-500 text-sm">
+              {article.count}
+            </p>
+          </div>
         </div>
 
         <Divider className="mb-3" />

@@ -12,7 +12,6 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
@@ -77,7 +76,6 @@ export default function CreateOrEditArticle() {
       const response = await fetch(endpoint, {
         method,
         headers: {
-          Authorization: `Bearer ${Cookies.get("googlesesionid")}`,
           "Content-Type": "application/json",
         },
         body,
@@ -204,9 +202,9 @@ export default function CreateOrEditArticle() {
             },
           },
         }}
-        onEditorChange={handleEditorChange}
-        
         value={articleData.content}
+        
+        onEditorChange={handleEditorChange}
         
       />
         </div>

@@ -36,6 +36,35 @@ export default async function Article({
 
     if (!thatArticle) notFound();
 
-    return <CategoryComponent articles={thatArticle} category={params.id} />;
+    const articleViews = await prisma.articleView.groupBy({
+        by: ['articleId'],
+        _count: {
+            articleId: true,
+        },
+        where: {
+            articleId: {
+                in: thatArticle.map(article => article.id),
+            },
+        },
+    });
+
+    const viewCounts: Record<string, number> = articleViews.reduce((acc: Record<string, number>, view) => {
+        acc[view.articleId] = view._count.articleId;
+
+        return acc;
+    }, {});
+
+    const formattedArticles = thatArticle.map((article) => {
+        return {
+            id: article.id,
+            title: article.title,
+            updatedAt: article.updatedAt,
+            emoji: article.emoji,
+            count: viewCounts[article.id] || 0,
+        };
+    });
+
+
+    return <CategoryComponent articles={formattedArticles} category={params.id} />;
 
 };

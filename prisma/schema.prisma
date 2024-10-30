@@ -27,11 +27,18 @@ model Article {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     title     String
     content   String
-    author    String    @db.ObjectId
+    author    String   @db.ObjectId
     category  String
     isPublic  Boolean
     isDeleted Boolean  @default(false)
     emoji     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model ArticleView {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    articleId String   @db.ObjectId
+    count     Int      @default(0)
+    ipAddress String[] @default([])
 }

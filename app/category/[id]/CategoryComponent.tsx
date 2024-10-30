@@ -1,7 +1,7 @@
 "use client";
 import { Input, Card, CardHeader, CardFooter } from "@nextui-org/react";
 import Link from "next/link";
-import { IconSearch } from "@tabler/icons-react";
+import { IconSearch, IconUser } from "@tabler/icons-react";
 import { useState } from "react";
 import { Emoji } from "emoji-picker-react";
 
@@ -12,6 +12,7 @@ interface Article {
   title: string;
   updatedAt: Date;
   emoji: string;
+  count: number;
 }
 
 export default function CategoryComponent({
@@ -73,6 +74,10 @@ export default function CategoryComponent({
                         {article.title}
                       </div>
                     </Link>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <IconUser color="gray" size={18} />
+                    <p className="text-gray-500 text-sm">{article.count}</p>
                   </div>
                 </CardHeader>
                 <CardFooter>
