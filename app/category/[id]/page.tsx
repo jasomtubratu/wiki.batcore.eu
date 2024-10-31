@@ -4,6 +4,8 @@ import CategoryComponent from "./CategoryComponent";
 
 import prisma from "@/prisma/client";
 
+export const dynamic = "force-dynamic";
+
 interface Article {
     id: string;
     title: string;
