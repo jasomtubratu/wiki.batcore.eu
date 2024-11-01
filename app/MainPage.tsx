@@ -16,6 +16,7 @@ import {
   IconQuestionMark,
   IconSearch,
   IconServer,
+  IconUser,
 } from "@tabler/icons-react";
 import { Emoji } from "emoji-picker-react";
 import { motion } from "framer-motion";
@@ -31,6 +32,7 @@ type Article = {
   title: string;
   emoji: string;
   category: string;
+  viewCount: number;
   updatedAt: Date;
 };
 
@@ -51,10 +53,13 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <ShootingStars />
-      <div aria-hidden="true" className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
-                        <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700" />
-                        <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600" />
-                    </div>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+      >
+        <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700" />
+        <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600" />
+      </div>
       <main className="flex-grow">
         <section className="py-20">
           <div className="container mx-auto px-4 text-center">
@@ -210,16 +215,12 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                 opacity: 1,
               }}
             >
-              Posledné články
+              Najpopulárnejšie články
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {Object.values(articles)
                 .flat()
-                .sort(
-                  (a, b) =>
-                    new Date(b.updatedAt).getTime() -
-                    new Date(a.updatedAt).getTime()
-                )
+                .sort((a: Article, b: Article) => b.viewCount - a.viewCount)
                 .slice(0, 6)
                 .map((article: Article, index: number) => (
                   <motion.div
@@ -243,10 +244,10 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                             </p>
                           </div>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-500">
-                            {article.updatedAt.toLocaleDateString()}{" "}
-                            {article.updatedAt.toLocaleTimeString()}
+                        <div className="flex items-center space-x-2">
+                          <IconUser color="gray" size={18} />
+                          <p className="text-gray-500 text-sm">
+                            {article.viewCount}
                           </p>
                         </div>
                       </CardHeader>

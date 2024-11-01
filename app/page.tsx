@@ -27,10 +27,27 @@ const ArticlePage = async () => {
         },
     });
 
+    const articlesView = await prisma.articleView.findMany({
+        select: {
+            articleId: true,
+            count: true,
+        },
+    });
+
+    const formattedArticles = userArticles.map(article => {
+        const viewCount = articlesView.find(view => view.articleId === article.id)?.count || 0;
+
+        return {
+            ...article,
+            viewCount,
+        };
+    }
+    );
+
     const categorizedArticles = {
-        vps: userArticles.filter(article => article.category === 'vps'),
-        minecraft: userArticles.filter(article => article.category === 'minecraft'),
-        others: userArticles.filter(article => article.category === 'ostatne'),
+        vps: formattedArticles.filter(article => article.category === 'vps'),
+        minecraft: formattedArticles.filter(article => article.category === 'minecraft'),
+        others: formattedArticles.filter(article => article.category === 'ostatne'),
     };
 
     return <Home articles={categorizedArticles} />;
