@@ -1,25 +1,25 @@
 "use client";
 import { Divider } from "@nextui-org/divider";
-import { Button } from "@nextui-org/button";
-import { IconBrandDiscord } from "@tabler/icons-react";
 
 export default function Footer() {
   return (
     <footer className="w-full py-8">
-    <div className="max-w-screen-xl mx-auto px-4 md:px-8 container">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-8 container">
         <Divider />
         <div className="flex justify-between items-center py-10">
-            <p className="font-light font-bold">
-                <span className="">© 2024 BatCore.eu </span>
-                s ❤️
-            </p>
-            <a href="https://batcore.eu/discord" rel="noreferrer noopener" target="_blank" title="Discord">
-                <Button isIconOnly variant="light">
-                    <IconBrandDiscord size={24} />
-                </Button>
+          <p className="font-light font-bold">
+            <span className="">© 2024 BatCore.eu </span>s ❤️
+          </p>
+          <div className="flex align-center">
+            <a
+              className="text-gray-500 hover:text-gray-700"
+              href="/Zasady_ochrany_osobnych_udajov_BatCore.pdf"
+            >
+              Zásady ochrany osobných údajov
             </a>
+          </div>
         </div>
-    </div>
+      </div>
     </footer>
   );
 }
