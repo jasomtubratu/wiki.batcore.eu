@@ -12,6 +12,7 @@ interface Article {
   updatedAt: Date;
   emoji: string;
   count: number;
+  customUrl: string;
 }
 
 export default async function Article({ params }: { params: { id: string } }) {
@@ -32,6 +33,7 @@ export default async function Article({ params }: { params: { id: string } }) {
     select: {
       id: true,
       title: true,
+      customUrl: true,
       emoji: true,
       updatedAt: true,
     },
@@ -66,6 +68,7 @@ export default async function Article({ params }: { params: { id: string } }) {
       title: article.title,
       updatedAt: article.updatedAt,
       emoji: article.emoji,
+      customUrl: article.customUrl,
       count: viewCounts[article.id] || 0,
     };
   });

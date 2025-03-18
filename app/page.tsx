@@ -9,6 +9,7 @@ type Article = {
     title: string;
     emoji: string;
     category: string;
+    customUrl: string;
     updatedAt: Date;
 };
 
@@ -23,6 +24,7 @@ const ArticlePage = async () => {
             title: true,
             emoji: true,
             category: true,
+            customUrl: true,
             updatedAt: true,
         },
     });

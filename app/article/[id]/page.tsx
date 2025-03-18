@@ -25,9 +25,11 @@ export default async function Article({ params }: { params: { id: string } }) {
   const headersList = headers();
 
   const session = await getServerAuthSession();
+  const test = String(params.id)
+
   const thatArticle = await prisma.article.findFirst({
     where: {
-      id: params.id,
+      customUrl: test,
       isDeleted: false,
     },
     select: {
@@ -62,7 +64,7 @@ export default async function Article({ params }: { params: { id: string } }) {
   if (!author) notFound();
 
   const ip = headersList.get("x-forwarded-for") || "121.0.0.1";
-  const encryptedIP = encryptIPAddress(ip);
+  const encryptedIP = "10";
 
   if (!encryptedIP) {
     throw new Error('Failed to encrypt IP address');
@@ -70,7 +72,7 @@ export default async function Article({ params }: { params: { id: string } }) {
 
   const articleView = await prisma.articleView.findFirst({
     where: {
-      articleId: params.id,
+      articleId: thatArticle.id,
     },
   });
 
@@ -93,7 +95,7 @@ export default async function Article({ params }: { params: { id: string } }) {
   } else {
     await prisma.articleView.create({
       data: {
-        articleId: params.id,
+        articleId: thatArticle.id,
         ipAddress: [encryptedIP],
         count: 1,
       },

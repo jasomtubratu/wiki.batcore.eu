@@ -32,6 +32,7 @@ type Article = {
   title: string;
   emoji: string;
   category: string;
+  customUrl: string;
   viewCount: number;
   updatedAt: Date;
 };
@@ -111,13 +112,13 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                   >
                     {articles.map((article: Article) => (
                       <AutocompleteItem
-                        key={article.id}
+                        key={article.customUrl}
                         startContent={
                           <Emoji size={20} unified={article.emoji} />
                         }
                         title={article.title}
                         onClick={() =>
-                          router.push("/article/" + article.id, undefined)
+                          router.push("/article/" + article.customUrl, undefined)
                         }
                       />
                     ))}
@@ -256,7 +257,7 @@ export default function Home({ articles }: { articles: CategorizedArticles }) {
                           className="p-0"
                           variant="ghost"
                           onClick={() =>
-                            router.push("/article/" + article.id, undefined)
+                            router.push("/article/" + article.customUrl, undefined)
                           }
                         >
                           Prečítať článok <IconBook2 className="h-4 w-4 ml-1" />

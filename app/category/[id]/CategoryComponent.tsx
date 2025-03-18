@@ -7,11 +7,13 @@ import { Emoji } from "emoji-picker-react";
 
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/main/footer";
+
 interface Article {
   id: string;
   title: string;
   updatedAt: Date;
   emoji: string;
+  customUrl: string;
   count: number;
 }
 
@@ -67,7 +69,7 @@ export default function CategoryComponent({
                   <div className="text-sm font-medium">
                     <Link
                       className="hover:underline"
-                      href={`/article/${article.id}`}
+                      href={`/article/${article.customUrl}`}
                     >
                       <div className="flex gap-2">
                         <Emoji size={20} unified={article.emoji} />
