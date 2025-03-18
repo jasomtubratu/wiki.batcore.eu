@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "prisma generate && prisma db push && next dev --turbo",
 		"build": "prisma generate && prisma db push && next build",
-		"start": "next start --port 3002",
+		"start": "next start -H 127.0.0.1 -p 3002",
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
 	},
 	"dependencies": {
