@@ -1,53 +1,43 @@
-# Next.js & NextUI Template
+# Wiki.BatCore.eu (Legacy)
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+This is the legacy version of the **wiki.batcore.eu** project — a static documentation and knowledge base site created for BatCore.eu customers.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+> ⚠️ This version is archived and preserved for educational purposes only.
 
-## Technologies Used
+---
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## 📚 What It Was
 
-## How to Use
+BatCore Wiki served as a lightweight documentation platform focused on:
 
-### Use the template with create-next-app
+- 🛠️ Guides for setting up and managing Minecraft and VPS servers  
+- 📄 Help articles, FAQs, and troubleshooting tips  
+- 🧪 Internal notes and support references for staff
 
-To create a new project based on this template using `create-next-app`, run the following command:
+---
 
-```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
-```
+## 🛠️ Tech Stack
 
-### Install dependencies
+- **Next.js** – for server-side rendering and fast page loads  
+- **React** – for interactive UI components  
+- **Tailwind CSS** – for styling and layout  
+---
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+## 🎓 Educational Notes
 
-```bash
-npm install
-```
+- Demonstrates how to build a no-backend documentation site using modern frontend tools  
+- Shows a minimal yet functional approach for internal or public wiki platforms  
+- Can be extended with real Markdown parsing or CMS integration if needed
 
-### Run the development server
+---
 
-```bash
-npm run dev
-```
+## 📦 Project Status
 
-### Setup pnpm (optional)
+This version is **deprecated** and no longer maintained.  
+It has been deleted from the internet because of the end of Batcore.eu
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+---
 
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
+## 👤 Author
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
-## License
-
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+Built by [Tomáš](https://tomasdavidik.sk)
